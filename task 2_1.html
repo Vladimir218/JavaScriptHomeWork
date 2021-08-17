@@ -1,0 +1,34 @@
+<!-- Дан код:
+var a = 1, b = 1, c, d;
+c = ++a; alert(c);           // 2
+d = b++; alert(d);           // 1
+c = (2+ ++a); alert(c);      // 5
+d = (2+ b++); alert(d);      // 4
+alert(a);                    // 3
+alert(b);                    // 3
+Почему код даёт именно такие результаты? -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var a = 1, b = 1, c, d;
+        c = ++a; console.log(c);           // 2 Действие идентично a + 1 = 2
+        d = b++; console.log(d);           // 1 Постпрефиксный инкремент. Вначале присваиваем d = 1, а потом b+1
+        c = (2 + ++a); console.log(c);     // 5 Действие аналогично a = a+1 (2+1=3) c=(2+a)=(2+3) = 5 
+        d = (2 + b++); console.log(d);     // 4 Действие аналогично d=(2 + 2) = 4 b = b+1 = 3
+        console.log(a);                    // 3 a = 3
+        console.log(b);                    // 3 b = 3
+
+    </script>
+</body>
+
+</html>
