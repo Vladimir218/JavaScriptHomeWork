@@ -1,0 +1,42 @@
+<!-- 1. С помощью цикла while вывести все простые числа в промежутке от 0 до 100. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function isPrime(n) {
+            if (n === 2) {
+                return n;
+            } else if (n > 2) {
+                let prime = n
+                for (let i = 2; i < Math.sqrt(n + 1); i++) {
+                    if (n % i === 0) {
+                        prime = false;
+                    }
+                }
+                return prime;
+            }
+            return false;
+        }
+
+        prime = [];
+        let i = 0;
+        while (i < 100) {
+            if (isPrime(i)) {
+                console.log(i);
+            }
+            i++;
+        }
+    </script>
+
+</body>
+
+</html>
