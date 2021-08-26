@@ -1,0 +1,61 @@
+<!-- 1. Написать функцию, преобразующую число в объект. 
+Передавая на вход число от 0 до 999, мы должны получить на выходе объект, 
+в котором в соответствующих свойствах описаны единицы, десятки и сотни. 
+Например, для числа 245 мы должны получить следующий объект: {‘единицы’: 5, ‘десятки’: 4, ‘сотни’: 2}. 
+Если число превышает 999, необходимо выдать соответствующее сообщение с 
+помощью console.log и вернуть пустой объект. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        let str = "";
+        function createObject(a, b, c) {
+            return {
+                'единицы': +c,
+                'десятки': +b,
+                'сотни': +a
+            }
+
+        }
+
+        function getObject(params) {
+            if (+params >= 0 && +params <= 999) {
+                let a = params.split('');
+                switch (params.length) {
+                    case 1:
+                        return createObject(0, 0, a[0]);
+                    case 2:
+                        return createObject(0, a[0], a[1]);
+                    case 3:
+                        return createObject(a[0], a[1], a[2]);
+                }
+            } else {
+                alert(`Число ${params} не попадает в диапазон [0..999]`)
+                if (+params > 999) {
+                    return {};
+                }
+            }
+        }
+
+        do {
+            str = prompt('Введите число от 0 до 999');
+        } while (!Number.isInteger(+str));
+
+        let obj = getObject(str);
+        console.log(obj);
+
+    </script>
+
+</body>
+
+</html>
