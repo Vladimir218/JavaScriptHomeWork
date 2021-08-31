@@ -11,7 +11,7 @@ const basketElement = {
 
 let basket = {
     basketBlock: null,
-    buttomReset:null,
+    buttomReset: null,
     purchases: [
         {
             idProduct: 1,
@@ -35,10 +35,14 @@ let basket = {
 
     init() {
         this.basketBlock = document.getElementById('basket');
-        this.buttomReset = document.getElementById('buttom');
+        this.buttomReset = document.getElementById('button');
+        this.buttomReset.addEventListener('click', this.clearBasket.bind(this));
         this.generateBasket();
     },
-
+    clearBasket() {
+        this.purchases = [];
+        this.generateBasket();
+    },
     generateBasket() {
         let n = 0;
         let m = 0;
@@ -49,10 +53,10 @@ let basket = {
                 m += purchase.quantity * purchase.price;
             });
             const totalText = `В корзине: ${n} товаров(а) на сумму ${m} рублей`;
-            console.log(totalText);
             this.totalBasket(totalText);
         } else {
-            this.totalBasket('Корзина пуста');
+            this.basketBlock.innerHTML = 'Корзина пуста';
+
         }
     },
 
