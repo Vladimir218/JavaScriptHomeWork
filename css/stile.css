@@ -1,0 +1,30 @@
+.tableChess{
+    border-collapse: collapse; 
+}
+
+td {
+    Width: 50px;
+    text-align: center;
+    vertical-align:center;
+    padding: 0px;
+    margin: 0px;
+    }
+
+tr {
+    height:50px ;
+    text-align: center;
+    vertical-align:center;
+    padding: 0px;
+    margin: 0px;
+    }
+.celBlack{
+    background: black;  
+}
+
+.celWhite{
+    background: white;  
+}
+.celBorder{
+    border:3px solid black;
+    border-collapse: collapse; 
+}
