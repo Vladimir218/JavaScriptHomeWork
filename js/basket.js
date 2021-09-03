@@ -15,14 +15,14 @@ const catalogElement = {
         return `<div class='basketElement'>
         <div><b>Наименование</b>: ${element.name}</div>
         <div><b>Цена за шт.</b>: ${element.price}</div>
-        <div><b>Объем заказа</b>: <input type="text" size=5"></div>
-        <div><button>добавить в корзину корзину</button></div>
+        <div><b>Объем заказа</b>: <input type="text" id = catalog${element.idProduct} size=5"></div>
+        <div><button id = catalogButton${element.idProduct}>добавить в корзину корзину</button></div>
     </div>`;
     }
 }
 
 let catalog = {
-    catalogBlok: null,
+    catalogBlock: null,
     purchases: [
         {
             idProduct: 0,
@@ -46,7 +46,6 @@ let catalog = {
 
     init() {
         this.catalogBlock = document.getElementById('catalog');
-        console.log(this.catalogBlock);
         this.generateCatalog();
         // this.buttomAdd = document.getElementById('button');
         // this.buttomReset.addEventListener('click', this.clearBasket.bind(this));
@@ -54,9 +53,14 @@ let catalog = {
     },
     generateCatalog() {
 
+
         if (this.purchases.length) {
             this.purchases.forEach(purchase => {
-                this.catologBlock.insertAdjacentHTML('afterbegin', '<div>sflshlfh</div>');
+
+                this.catalogBlock.insertAdjacentHTML('afterbegin', catalogElement.renderElement(purchase));
+                let catalogBut = document.getElementById(`catalogButton${purchase.idProduct}`);
+                // this.catalogBut.addEventListener('click', {});
+                console.log(`catalogButton${purchase.idProduct}`);
             });
 
         } else {
@@ -64,6 +68,9 @@ let catalog = {
 
         }
     },
+    addBasket() {
+        alert('tst')
+    }
 
 }
 
