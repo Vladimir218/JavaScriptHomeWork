@@ -1,0 +1,12 @@
+
+.basketElement {
+    border: 2px solid black;
+    background:red;
+    margin: 5px;
+}
+.catalogElement {
+    border: 2px solid black;
+    background:yellow;
+    margin: 5px;
+    padding: 10px;
+}
