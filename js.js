@@ -87,7 +87,7 @@ const map = {
         }
     },
 
-    render(snakePointsArray, foodPoint) {
+    render(snakePointsArray, foodPoint, obstaclesPoint) {
         for (const cell of this.usedCells) {
             cell.className = 'cell';
         }
@@ -108,6 +108,35 @@ const map = {
         foodCell.classList.add('food');
 
         this.usedCells.push(foodCell);
+
+        const obstaclesCellKey = `x${obstaclesPoint.x}_y${obstaclesPoint.y}`;
+        const obstaclesCell = this.cells[obstaclesCellKey];
+
+        obstaclesCell.classList.add('obstacles');
+
+        this.usedCells.push(obstaclesCell);
+    },
+};
+
+
+const obstacles = {
+    x: null,
+    y: null,
+
+    getCoordinates() {
+        return {
+            x: this.x,
+            y: this.y,
+        };
+    },
+
+    setCoordinates(point) {
+        this.x = point.x;
+        this.y = point.y;
+    },
+
+    isOnPoint(point) {
+        return this.x === point.x && this.y === point.y;
     },
 };
 
@@ -136,11 +165,13 @@ const snake = {
     body: [],
     direction: null,
     lastStepDirection: null,
+    score: null,
 
     init(startBody, direction) {
         this.body = startBody;
         this.direction = direction;
         this.lastStepDirection = direction;
+        this.score = document.getElementById('score');
     },
 
     getBody() {
@@ -169,6 +200,7 @@ const snake = {
 
     growUp() {
         const lastBodyIndex = this.getBody().length - 1;
+        this.score.innerHTML = `Счет в игре: ${this.getBody().length}`;
         const lastBodyPoint = this.getBody()[lastBodyIndex];
         const lastBodyPointClone = Object.assign({}, lastBodyPoint);
 
@@ -180,13 +212,13 @@ const snake = {
 
         switch (this.direction) {
             case 'up':
-                return {x: firstPoint.x, y: firstPoint.y - 1};
+                return { x: firstPoint.x, y: firstPoint.y - 1 };
             case 'right':
-                return {x: firstPoint.x + 1, y: firstPoint.y};
+                return { x: firstPoint.x + 1, y: firstPoint.y };
             case 'down':
-                return {x: firstPoint.x, y: firstPoint.y + 1};
+                return { x: firstPoint.x, y: firstPoint.y + 1 };
             case 'left':
-                return {x: firstPoint.x - 1, y: firstPoint.y};
+                return { x: firstPoint.x - 1, y: firstPoint.y };
         }
     },
 };
@@ -220,6 +252,7 @@ const game = {
     map,
     snake,
     food,
+    obstacles,
     status,
     tickInterval: null,
 
@@ -237,7 +270,7 @@ const game = {
         this.map.init(this.config.getRowsCount(), this.config.getColsCount());
 
         this.setEventHandlers();
-//        this.reset();
+        //        this.reset();
     },
 
     setEventHandlers() {
@@ -256,11 +289,12 @@ const game = {
         this.stop();
         this.snake.init(this.getStartSnakeBody(), 'up');
         this.food.setCoordinates(this.getRandomFreeCoordinates());
+        this.obstacles.setCoordinates(this.getRandomFreeCoordinates());
         this.render();
     },
 
     render() {
-        this.map.render(this.snake.body, this.food.getCoordinates());
+        this.map.render(this.snake.body, this.food.getCoordinates(), this.obstacles.getCoordinates());
     },
 
     getStartSnakeBody() {
@@ -273,7 +307,7 @@ const game = {
     },
 
     getRandomFreeCoordinates() {
-        const exclude = [this.food.getCoordinates(), ...this.snake.getBody()];
+        const exclude = [this.food.getCoordinates(), this.obstacles.getCoordinates(), ...this.snake.getBody()];
 
         while (true) {
             const rndPoint = {
@@ -365,6 +399,7 @@ const game = {
         if (this.food.isOnPoint(this.snake.getNextHeadPoint())) {
             this.snake.growUp();
             this.food.setCoordinates(this.getRandomFreeCoordinates());
+            this.obstacles.setCoordinates(this.getRandomFreeCoordinates())
 
             if (this.isGameWon()) this.finish();
         }
@@ -381,6 +416,7 @@ const game = {
         const nextHeadPoint = this.snake.getNextHeadPoint();
 
         return !this.snake.isOnPoint(nextHeadPoint) &&
+            !this.obstacles.isOnPoint(nextHeadPoint) &&
             nextHeadPoint.x < this.config.getColsCount() &&
             nextHeadPoint.y < this.config.getRowsCount() &&
             nextHeadPoint.x >= 0 &&
@@ -388,4 +424,4 @@ const game = {
     }
 };
 
-game.init({speed: 3});
+game.init({ speed: 3 });

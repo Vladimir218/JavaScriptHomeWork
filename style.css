@@ -15,6 +15,14 @@
 .menuButton:hover{
     background: #009641;
 }
+.scoreString{
+    padding: 15px;
+    margin: 10px;
+    color: white;
+    background: #007b32;
+    text-align: center;
+    position: relative
+}
 #game{
     border-collapse: collapse;
     margin: 2% auto 0;
@@ -31,6 +39,9 @@ td.cell{
 }
 .food{
     background: #00d021;
+}
+.obstacles{
+    background:yellow;
 }
 .snakeBody{
     background: #e5e5e5;
